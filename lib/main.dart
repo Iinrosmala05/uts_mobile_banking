@@ -15,15 +15,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  final List<String> menu = [
-    "Cek Saldo",
-    "Transfer",
-    "Pembayaran",
-    "Top Up",
-    "Riwayar Transaksi",
-    "Logout"
-  ];
+class HomePage extends StatefulWidget {
+    @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  double saldo = 10000000;
+
+  void updateSaldo(double nilai) {
+    setState(() {
+      saldo += nilai;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,34 +37,73 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(20),
-        gridDelegate:
-SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 20,
-      ) ,
-      itemCount: menu.length,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.blue[100],
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Text(
-              menu[index],
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
+      body: Column(
+        children: [
+          // Container Saldo
+          Container(
+            padding: EdgeInsets.all(20),
+            margin: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Saldo Anda",
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Rp ${saldo.toStringAsFixed(0)}",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
-        );
-      },
-      ),
-    );
-  }
-}
+        
+          // Grid Menu
+          Expanded(
+            child: GridView.count(
+            crossAxisCount: 3,
+            children: [
+               menuItem(Icons.send, "Transfer"),
+               menuItem(Icons.phone_android, "pulsa"),
+               menuItem(Icons.receipt, "Tagihan"),
+               menuItem(Icons.account_balance, "Top Up"),
+               menuItem(Icons.history, "Riwayat"),
+               menuItem(Icons.settings, "Pengaturan"),
+              ],
+            ),
+           ),
+          ], 
+        ),
+      );
+     }
+     
+     Widget menuItem(IconData icon, String title){
+      return GestureDetector(
+        onTap: () {
+          //contoh interaksi: Update saldo jika Transfer/Top Up di klik
+          if (title == "Transfer") updateSaldo(-500000);
+          if (title == "Top Up") updateSaldo(500000);
+        },
+        child: Card(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 30, color: Colors.blue),
+              SizedBox(height: 10),
+              Text(title),
+            ],
+          ),
+        ),
+      );
+     }
+    }
