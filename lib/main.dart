@@ -29,6 +29,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  String formatRupiah(double angka) {
+    return "Rp ${angka.toStringAsFixed(0).replaceAllMapped(RegExp (r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+    (Match m) => '${m[1]}.')}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +41,10 @@ class _HomePageState extends State<HomePage> {
         title: Text("Mobile Banking"),
         centerTitle: true,
         backgroundColor: Colors.blue,
+        actions: [
+          Icon(Icons.notifications),
+          SizedBox(width: 10,)
+        ],
       ),
       body: Column(
         children: [
@@ -51,12 +60,17 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  "Halo, Iin Rosmala",
+                  style:TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                SizedBox(height: 5),
+                Text(
                   "Saldo Anda",
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Rp ${saldo.toStringAsFixed(0)}",
+                  formatRupiah(saldo),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -90,7 +104,7 @@ class _HomePageState extends State<HomePage> {
      }
      
      Widget menuItem(IconData icon, String title){
-      return GestureDetector(
+      return InkWell(
         onTap: () {
           //contoh interaksi: Update saldo jika Transfer/Top Up di klik
           if (title == "Transfer") updateSaldo(-500000);
