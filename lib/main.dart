@@ -109,8 +109,43 @@ class _HomePageState extends State<HomePage> {
           //contoh interaksi: Update saldo jika Transfer/Top Up di klik
           if (title == "Transfer") updateSaldo(-500000);
           if (title == "Top Up") updateSaldo(500000);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("$title dipilih"),
-          ));
+          showDialog(
+            context: context,
+            builder: (context){
+              return Dialog(
+                shape: RoundedRectangleBorder( 
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(20),          
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(icon, size: 50, color: Colors.blue),
+                      SizedBox(height: 15),
+                      Text(
+                        title,
+                        style:TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text("Menu berhasil dipilih"),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed:() {
+                          Navigator.pop(context);
+                        },
+                        child: Text("OK"),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+          );
         },
         child: Card(
           margin: EdgeInsets.all(10),
