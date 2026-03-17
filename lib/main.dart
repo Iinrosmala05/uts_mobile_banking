@@ -71,6 +71,9 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: GridView.count(
             crossAxisCount: 3,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            padding: EdgeInsets.all(10),
             children: [
                menuItem(Icons.send, "Transfer"),
                menuItem(Icons.phone_android, "pulsa"),
@@ -92,6 +95,8 @@ class _HomePageState extends State<HomePage> {
           //contoh interaksi: Update saldo jika Transfer/Top Up di klik
           if (title == "Transfer") updateSaldo(-500000);
           if (title == "Top Up") updateSaldo(500000);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("$title dipilih"),
+          ));
         },
         child: Card(
           margin: EdgeInsets.all(10),
