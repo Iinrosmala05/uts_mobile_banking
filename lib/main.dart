@@ -38,20 +38,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mobile Banking"),
-        centerTitle: true,
         backgroundColor: Colors.blue,
-        actions: [Icon(Icons.notifications),
-        SizedBox(width: 10),
-        ],
+        title: Text(
+            "Mobile Banking",
+            style: TextStyle(
+              fontWeight: FontWeight.bold),
+            ),
+           actions: [
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {},
+            )
+           ],
       ),
-
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Beranda"),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: "Riwayat"),
+          BottomNavigationBarItem(icon: Icon(Icons.qr_code_scanner), label: "Scan"),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notifikasi"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
         ],
       ),
@@ -59,8 +71,8 @@ class _HomePageState extends State<HomePage> {
         children: [
           //Card Saldo
           Container(
-            padding: EdgeInsets.all(15),
-            margin: EdgeInsets.all(15),
+            padding: EdgeInsets.all(12),
+            margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -83,6 +95,7 @@ class _HomePageState extends State<HomePage> {
                         isSaldoVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
+                        size: 18,
                       ),
                       onPressed: () {
                         setState(() {
@@ -94,26 +107,82 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   isSaldoVisible ? formatRupiah(saldo) : "Rp ******",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "💸Kirim uang cepat",
+                style: TextStyle(fontWeight: FontWeight.bold,
+                fontSize: 12),
+              ),
+            ),
+          ),
+          SizedBox(height: 5),
+
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.blue[50],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Text("📊Grafik saldo", style: TextStyle(fontSize: 12)),
+            ),
+          ),
+          SizedBox(height: 8),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text("🧾Transaksi Terakhir", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12),
+              ),
+            ),
+          ),
+
+          ListTile(
+            dense: true,
+            leading: Icon(Icons.arrow_upward,
+            color: Colors.red, size: 18),
+            title: Text("Transfer", style: TextStyle(fontSize: 12)),
+            subtitle: Text("Hari Ini", style: TextStyle(fontSize: 10)),
+            trailing: Text("-Rp500.000",
+            style: TextStyle(fontSize: 12)),
+          ),
+
+          ListTile(
+            dense: true,
+            leading: Icon(Icons.arrow_downward,
+            color: Colors.green, size: 18),
+            title: Text("Top Up", style: TextStyle(fontSize: 12)),
+            subtitle: Text("Kemarin", style: TextStyle(fontSize: 10)),
+            trailing: Text("+Rp500.000",
+            style: TextStyle(fontSize: 12)),
           ),
 
           // Grid Menu
           Expanded(
             child: GridView.count(
               crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              childAspectRatio: 1.3,
               padding: EdgeInsets.all(10),
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
               children: [
                 menuItem(Icons.send, "Transfer"),
                 menuItem(Icons.phone_android, "Pulsa"),
                 menuItem(Icons.receipt, "Tagihan"),
                 menuItem(Icons.account_balance, "Top Up"),
-                menuItem(Icons.history, "Riwayat"),
-                menuItem(Icons.settings, "Pengaturan"),
               ],
             ),
           ),
@@ -133,23 +202,21 @@ class _HomePageState extends State<HomePage> {
           context: context,
           builder: (context) {
             return Dialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 120),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(15),
               ),
-              child: Container(
-                width: 200,
+              child: Padding(
                 padding: EdgeInsets.all(15),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(icon, size: 40, color: Colors.blue),
-                    SizedBox(height: 10),
+                    Icon(icon, size: 30, color: Colors.blue),
+                    SizedBox(height: 8),
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -170,15 +237,23 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 25, color: Colors.blue),
-            SizedBox(height: 5),
-            Text(title, style: TextStyle(fontSize: 12)),
-          ],
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(3),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 22, color: Colors.blue),
+              SizedBox(height: 4),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
         ),
       ),
     );
