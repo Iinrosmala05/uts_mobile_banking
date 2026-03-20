@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,29 +38,36 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color(0XFFF5F7FA),
 
+      //APPBAR
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF0D47A1),
         title: Text(
             "Mobile Banking",
-            style: TextStyle(
-              fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1,
+              ),
             ),
            actions: [
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings, color: Colors.white),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.logout),
+              icon: Icon(Icons.logout, color: Colors.white),
               onPressed: () {},
             )
            ],
       ),
+
+      //BOTTOM NAV
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color(0XFF0D47A1),
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Beranda"),
@@ -69,36 +77,48 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
         ],
       ),
+
       body: Column (
         children: [
-          //Card Saldo
+
+          //CARD SALDO
           Container(
             padding: EdgeInsets.all(12),
             margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              gradient: LinearGradient(
+                colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(15),
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 6,
+                  offset: Offset(0,3),
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Halo, Iin Rosmala",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Saldo Anda"),
+                    Text("Saldo Anda", style: TextStyle(color: Colors.white)),
                     IconButton(
                       icon: Icon(
                         isSaldoVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
                         size: 18,
+                        color: Colors.white,
                       ),
                       onPressed: () {
                         setState(() {
@@ -110,31 +130,41 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   isSaldoVisible ? formatRupiah(saldo) : "Rp ******",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),
           ),
 
+          //QUICK ACTION TITLE
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "💸Kirim uang cepat",
-                style: TextStyle(fontWeight: FontWeight.bold,
-                fontSize: 12),
+                "Kirim uang cepat",
+                style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w600
+                ),
               ),
             ),
           ),
-          SizedBox(height: 5),
-
+          SizedBox(height: 10),
+          
+          //GRAFIK
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
             height: 60,
             decoration: BoxDecoration(
-              color: Colors.blue[50],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 3,
+                )
+              ],
             ),
             child: Center(
               child: Text("📊Grafik saldo", style: TextStyle(fontSize: 12)),
@@ -142,13 +172,15 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: 8),
 
+          //TRANSAKSI
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text("🧾Transaksi Terakhir", style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12),
+              child: Text("🧾Transaksi Terakhir",
+              style:GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+              ),
               ),
             ),
           ),
@@ -173,19 +205,19 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontSize: 12)),
           ),
 
-          // Grid Menu
+          //GRID MENU
           Expanded(
             child: GridView.count(
               crossAxisCount: 3,
-              childAspectRatio: 1.6,
-              padding: EdgeInsets.all(10),
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              childAspectRatio: 2.1,
+              padding: EdgeInsets.all(8),
+              crossAxisSpacing: 6,
+              mainAxisSpacing: 6,
               children:[
                 menuItem(Icons.send, "Transfer"),
                 menuItem(Icons.phone_android, "Pulsa"),
                 menuItem(Icons.receipt, "Tagihan"),
-                menuItem(Icons.account_balance, "Top Up"),
+                menuItem(Icons.account_balance_wallet, "Top Up"),
                 menuItem(Icons.credit_card, "E-Wallet"),
                 menuItem(Icons.wifi, "Internet"),
              ],
@@ -195,7 +227,26 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }         
+  //QUICK MENU
+  Widget quickMenu(IconData icon, String title){
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+          ),
+          child: Icon(icon, color: Color(0XFF0D47A1), size: 22),
+        ),
+        SizedBox(height: 4),
+        Text(title, style: TextStyle(fontSize: 10)),
+      ],
+    );
+}
 
+  //MENU GRID
   Widget menuItem(IconData icon, String title) {
     return InkWell(
       onTap: () {
@@ -208,16 +259,16 @@ class _HomePageState extends State<HomePage> {
           builder: (context) {
             return Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(12),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(icon, size: 30, color: Colors.blue),
-                    SizedBox(height: 8),
+                    Icon(icon, size: 28, color: Colors.blue),
+                    SizedBox(height: 6),
                     Text(
                       title,
                       style: TextStyle(
@@ -227,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SizedBox(height: 5),
                     Text("Berhasil", style: TextStyle(fontSize: 12)),
-                    SizedBox(height: 10),
+                    SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -242,21 +293,21 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)
+        elevation: 0.5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)
         ),
         child: Container(
           height: 55,
-          padding: EdgeInsets.all(4),
+          padding: EdgeInsets.symmetric(vertical: 2),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 24, color: Colors.blue),
-              SizedBox(height: 3),
+              Icon(icon, size: 26, color: Color(0XFF0D47A1)),
+              SizedBox(height: 2),
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 11),
+                style: TextStyle(fontSize: 10),
               )
             ],
           ),
