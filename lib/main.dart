@@ -37,6 +37,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
@@ -67,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
         ],
       ),
-      body: Column(
+      body: Column (
         children: [
           //Card Saldo
           Container(
@@ -86,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -174,22 +177,24 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: GridView.count(
               crossAxisCount: 3,
-              childAspectRatio: 1.3,
+              childAspectRatio: 1.6,
               padding: EdgeInsets.all(10),
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              children: [
+              children:[
                 menuItem(Icons.send, "Transfer"),
                 menuItem(Icons.phone_android, "Pulsa"),
                 menuItem(Icons.receipt, "Tagihan"),
                 menuItem(Icons.account_balance, "Top Up"),
-              ],
+                menuItem(Icons.credit_card, "E-Wallet"),
+                menuItem(Icons.wifi, "Internet"),
+             ],
             ),
           ),
         ],
       ),
     );
-  }
+  }         
 
   Widget menuItem(IconData icon, String title) {
     return InkWell(
@@ -240,13 +245,14 @@ class _HomePageState extends State<HomePage> {
         elevation: 1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)
         ),
-        child: Padding(
-          padding: EdgeInsets.all(3),
+        child: Container(
+          height: 55,
+          padding: EdgeInsets.all(4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 22, color: Colors.blue),
-              SizedBox(height: 4),
+              Icon(icon, size: 24, color: Colors.blue),
+              SizedBox(height: 3),
               Text(
                 title,
                 textAlign: TextAlign.center,
