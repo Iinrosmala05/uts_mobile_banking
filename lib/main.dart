@@ -38,20 +38,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFF5F7FA),
+      backgroundColor: Color(0xFFF1F5F9),
 
       //APPBAR
       appBar: AppBar(
         backgroundColor: Color(0xFF0D47A1),
-        title: Text(
-            "Mobile Banking",
+        elevation: 0,
+        title: Text (
+            "m-Banking",
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.w600,
               letterSpacing: 1,
               ),
-            ),
+        ),
            actions: [
             IconButton(
               icon: Icon(Icons.settings, color: Colors.white),
@@ -60,10 +61,10 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(Icons.logout, color: Colors.white),
               onPressed: () {},
-            )
+            ),
            ],
-      ),
-
+        ),
+    
       //BOTTOM NAV
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -78,13 +79,14 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 
-      body: Column (
-        children: [
+      body: SingleChildScrollView (
+        child: Column(
+         children: [
 
           //CARD SALDO
           Container(
-            padding: EdgeInsets.all(12),
-            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(16),
+            margin: EdgeInsets.all(12),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
@@ -105,9 +107,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text(
                   "Halo, Iin Rosmala",
-                  style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(color:Colors.white, fontWeight: FontWeight.w600),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -130,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   isSaldoVisible ? formatRupiah(saldo) : "Rp ******",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),
@@ -138,7 +140,7 @@ class _HomePageState extends State<HomePage> {
 
           //QUICK ACTION TITLE
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -151,11 +153,27 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 10),
+
+          //QUICK MENU
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                quickMenu(Icons.send, "Transfer"),
+                quickMenu(Icons.account_balance_wallet, "Top Up"),
+                quickMenu(Icons.phone_android, "Pulsa"),
+                quickMenu(Icons.qr_code_scanner,"QRIS"),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 10),
           
           //GRAFIK
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
-            height: 60,
+            height: 100,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -166,11 +184,31 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-            child: Center(
-              child: Text("📊Grafik saldo", style: TextStyle(fontSize: 12)),
-            ),
-          ),
-          SizedBox(height: 8),
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(height: 20, width: 6, color: Color(0XFF0D47A1)),
+                  Container(height: 35, width: 6, color: Color(0XFF0D47A1)),
+                  Container(height: 25, width: 6, color: Color(0XFF0D47A1)),
+                  Container(height: 45, width: 6, color: Color(0XFF0D47A1)),
+                  Container(height: 30, width: 6, color: Color(0XFF0D47A1)),
+                  Container(height: 50, width: 6, color: Color(0XFF0D47A1)),
+                  Container(height: 40, width: 6, color: Color(0XFF0D47A1)),
+                ],
+              ),
+              SizedBox(height: 6),
+              Text(
+                "Grafik Saldo Mingguan",
+                style: GoogleFonts.poppins(fontSize: 11),
+              )
+            ],
+          ),  
+        ),
 
           //TRANSAKSI
           Padding(
@@ -206,8 +244,9 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //GRID MENU
-          Expanded(
-            child: GridView.count(
+            GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               crossAxisCount: 3,
               childAspectRatio: 2.1,
               padding: EdgeInsets.all(8),
@@ -222,11 +261,11 @@ class _HomePageState extends State<HomePage> {
                 menuItem(Icons.wifi, "Internet"),
              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
-  }         
+  }        
   //QUICK MENU
   Widget quickMenu(IconData icon, String title){
     return Column(
